@@ -25,7 +25,6 @@
 #include <QQmlContext>
 #include <QIcon>
 #include "imagewriter.h"
-#include "networkaccessmanagerfactory.h"
 #include "nativefiledialog.h"
 #include <QQuickWindow>
 #include <QScreen>
@@ -315,7 +314,6 @@ int main(int argc, char *argv[])
         qDebug() << "Embedded mode detected. System locale:" << QLocale::system().name();
     }
 #endif
-    NetworkAccessManagerFactory namf;
     QQmlApplicationEngine engine;
     QString customQm;
     bool enableLanguageSelection = false;
@@ -634,7 +632,6 @@ int main(int argc, char *argv[])
         imageWriter.setOsListRefreshOverride(sanitizedInterval, sanitizedJitter);
     }
     imageWriter.setEngine(&engine);
-    engine.setNetworkAccessManagerFactory(&namf);
 
     // Determine if we should show the language selection landing step
     // Consider language undetermined if QLocale::system() is AnyLanguage or C

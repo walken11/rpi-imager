@@ -557,7 +557,10 @@ cp -d "$QT_DIR/qml/Qt/labs/folderlistmodel/"* "$APPDIR/usr/qml/Qt/labs/folderlis
 
 mkdir -p "$APPDIR/usr/plugins/platforms"
 cp "$QT_DIR/plugins/platforms/libqlinuxfb.so" "$APPDIR/usr/plugins/platforms/" 2>/dev/null || true
-cp -r "$QT_DIR/plugins/tls" "$APPDIR/usr/plugins/" 2>/dev/null || true
+# Only include the certificate-parsing backend; the OpenSSL TLS backend is not
+# needed because all HTTPS traffic goes through libcurl (linked to GnuTLS).
+mkdir -p "$APPDIR/usr/plugins/tls"
+cp "$QT_DIR/plugins/tls/libqcertonlybackend.so" "$APPDIR/usr/plugins/tls/" 2>/dev/null || true
 
 # Copy only essential image format plugins (consistency with all platforms)
 # Includes: JPEG, PNG, SVG (common formats + icons)
