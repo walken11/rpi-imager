@@ -4,6 +4,7 @@
  */
 
 #include "../platformquirks.h"
+#include "diskpart_util.h"
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0A00  // Windows 10 or later
 #endif
@@ -696,13 +697,24 @@ DiskResult unmountDisk(const QString& device) {
     return result;
 }
 
+DiskResult refreshDiskView(const QString& device) {
+    auto result = DiskpartUtil::rescanDisk(device.toUtf8());
+    if (result.success) {
+        return DiskResult::Success;
+    }
+    // rescanDisk returns success for paths it doesn't recognise as physical
+    // drives, so a failure here is a genuine IOCTL error.
+    qDebug() << "refreshDiskView: rescan failed for" << device << "-" << result.errorMessage;
+    return DiskResult::Error;
+}
+
 DiskResult ejectDisk(const QString& device) {
     int deviceNumber = parseDeviceNumberImpl(device);
     if (deviceNumber < 0) {
         qDebug() << "ejectDisk: invalid device path" << device;
         return DiskResult::InvalidDrive;
     }
-    
+
     qDebug() << "ejectDisk: ejecting device" << deviceNumber;
     
     // Get all logical drives

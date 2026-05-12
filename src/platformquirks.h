@@ -153,6 +153,25 @@ namespace PlatformQuirks {
      */
     DiskResult ejectDisk(const QString& device);
 
+    /**
+     * Ask the OS to re-read partition information from a disk and refresh its
+     * view of mounted volumes / drive letters. Intended for use after a write
+     * error or other abrupt end to a raw-write operation, where the on-disk
+     * partition table no longer matches what the OS last enumerated.
+     *
+     * On Windows this issues IOCTL_DISK_UPDATE_PROPERTIES so a wiped or
+     * partially-written disk regains its drive letter and Explorer stops
+     * showing it as missing.
+     *
+     * On Linux and macOS the kernel re-reads the partition table when the
+     * exclusive device handle is closed, so this is a no-op that returns
+     * Success.
+     *
+     * @param device The device path
+     * @return DiskResult::Success on success, error code otherwise
+     */
+    DiskResult refreshDiskView(const QString& device);
+
 #ifdef Q_OS_LINUX
     /**
      * Find the system's CA certificate bundle for libcurl.

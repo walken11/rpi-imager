@@ -278,55 +278,103 @@ DiskpartResult cleanDiskFast(const QByteArray &device, TimingCallback timingCall
     {
         timingCallback("driveDiskClean", cleanElapsed, true);
     }
-    
-    // Rescan disk to update Windows' view of the partition table
-    QElapsedTimer rescanTimer;
-    rescanTimer.start();
-    
+
+    CloseHandle(hDisk);
+
     if (success)
     {
-        // Update disk properties - tells Windows to re-read disk info
-        if (!DeviceIoControl(hDisk, IOCTL_DISK_UPDATE_PROPERTIES, nullptr, 0, nullptr, 0, &bytesReturned, nullptr))
-        {
-            DWORD error = GetLastError();
-            qDebug() << "IOCTL_DISK_UPDATE_PROPERTIES failed with error" << error << "- continuing anyway";
-        }
-        else
-        {
-            qDebug() << "Updated disk properties";
-        }
+        // Refresh Windows' view of the partition table now that it has been wiped.
+        rescanDisk(device, timingCallback);
+    }
 
-        // Wait for the OS to finish processing volume changes (Windows 8+).
-        // This is a proper waitable IOCTL — it blocks until all volumes on the
-        // disk have been brought online (or torn down), rather than relying on
-        // an arbitrary sleep.  Falls back to a fixed delay if the IOCTL is not
-        // supported on this OS version.
-        QElapsedTimer volumeReadyTimer;
-        volumeReadyTimer.start();
-        if (DeviceIoControl(hDisk, IOCTL_DISK_ARE_VOLUMES_READY, nullptr, 0, nullptr, 0, &bytesReturned, nullptr))
+    qDebug() << "cleanDiskFast completed:" << (success ? "success" : "failed")
+             << "clean=" << cleanElapsed << "ms";
+
+    return DiskpartResult{success, errorMessage};
+}
+
+DiskpartResult rescanDisk(const QByteArray &device, TimingCallback timingCallback)
+{
+    int diskNumber;
+    if (!extractDiskNumber(device, diskNumber))
+    {
+        // Not a Windows physical drive path — nothing to rescan. Treat as a no-op.
+        return DiskpartResult{true, QString()};
+    }
+
+    QElapsedTimer rescanTimer;
+    rescanTimer.start();
+
+    HANDLE hDisk = CreateFileA(
+        device.constData(),
+        GENERIC_READ | GENERIC_WRITE,
+        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        nullptr,
+        OPEN_EXISTING,
+        0,
+        nullptr
+    );
+
+    if (hDisk == INVALID_HANDLE_VALUE)
+    {
+        DWORD error = GetLastError();
+        QString errMsg = QObject::tr("Failed to open disk for rescan. Error code: %1").arg(error);
+        qDebug() << errMsg;
+        if (timingCallback)
         {
-            qDebug() << "IOCTL_DISK_ARE_VOLUMES_READY completed in" << volumeReadyTimer.elapsed() << "ms";
+            timingCallback("driveRescan", static_cast<quint32>(rescanTimer.elapsed()), false);
         }
-        else
-        {
-            DWORD error = GetLastError();
-            qDebug() << "IOCTL_DISK_ARE_VOLUMES_READY failed with error" << error << "- falling back to fixed delay";
-            QThread::msleep(500);
-        }
+        return DiskpartResult{false, errMsg};
+    }
+
+    DWORD bytesReturned;
+
+    // Tells Windows to re-read partition info from the disk. Without this,
+    // Explorer keeps showing whatever state the disk was in before we touched
+    // it (or — if we previously wiped the partition table — nothing at all),
+    // and no drive letter is assigned to the new partitions.
+    if (!DeviceIoControl(hDisk, IOCTL_DISK_UPDATE_PROPERTIES, nullptr, 0, nullptr, 0, &bytesReturned, nullptr))
+    {
+        DWORD error = GetLastError();
+        qDebug() << "IOCTL_DISK_UPDATE_PROPERTIES failed with error" << error << "- continuing anyway";
+    }
+    else
+    {
+        qDebug() << "Updated disk properties";
+    }
+
+    // Wait for the OS to finish processing volume changes (Windows 8+).
+    // Blocks until all volumes on the disk have been brought online (or torn
+    // down) rather than relying on an arbitrary sleep. Falls back to a fixed
+    // delay if the IOCTL is not supported.
+    QElapsedTimer volumeReadyTimer;
+    volumeReadyTimer.start();
+    if (DeviceIoControl(hDisk, IOCTL_DISK_ARE_VOLUMES_READY, nullptr, 0, nullptr, 0, &bytesReturned, nullptr))
+    {
+        qDebug() << "IOCTL_DISK_ARE_VOLUMES_READY completed in" << volumeReadyTimer.elapsed() << "ms";
+    }
+    else
+    {
+        DWORD error = GetLastError();
+        qDebug() << "IOCTL_DISK_ARE_VOLUMES_READY failed with error" << error << "- falling back to fixed delay";
+        QThread::msleep(500);
     }
 
     CloseHandle(hDisk);
-    
+
+    // Nudge Explorer to refresh its view of available drives.
+    SHChangeNotify(SHCNE_DRIVEADD, SHCNF_IDLIST, NULL, NULL);
+    SHChangeNotify(SHCNE_MEDIAINSERTED, SHCNF_IDLIST, NULL, NULL);
+
     quint32 rescanElapsed = static_cast<quint32>(rescanTimer.elapsed());
-    if (timingCallback && success)
+    if (timingCallback)
     {
         timingCallback("driveRescan", rescanElapsed, true);
     }
-    
-    qDebug() << "cleanDiskFast completed:" << (success ? "success" : "failed") 
-             << "clean=" << cleanElapsed << "ms, rescan=" << rescanElapsed << "ms";
-    
-    return DiskpartResult{success, errorMessage};
+
+    qDebug() << "rescanDisk completed for disk" << diskNumber << "in" << rescanElapsed << "ms";
+
+    return DiskpartResult{true, QString()};
 }
 
 DiskpartResult cleanDisk(const QByteArray &device, std::chrono::milliseconds timeout, int maxRetries, VolumeHandling volumeHandling)

@@ -431,6 +431,13 @@ DiskResult unmountDisk(const QString& device) {
     return runDiskOperation(bsdNameBytes.constData(), unmountCallback);
 }
 
+DiskResult refreshDiskView(const QString& device) {
+    // DiskArbitration handles partition rescans when we close the device, and
+    // re-mounts removable media automatically. Nothing for us to do here.
+    Q_UNUSED(device);
+    return DiskResult::Success;
+}
+
 DiskResult ejectDisk(const QString& device) {
     // Ensure we're using block device path (disk, not rdisk)
     QString diskPath = getEjectDevicePath(device);

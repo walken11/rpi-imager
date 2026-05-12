@@ -1493,6 +1493,14 @@ DiskResult ejectDisk(const QString& device) {
     return unmountDisk(device);
 }
 
+DiskResult refreshDiskView(const QString& device) {
+    // The kernel re-reads the partition table when the exclusive device handle
+    // is closed (BLKRRPART is also available, but unnecessary in the normal
+    // flow), and udev handles drive-name reassignment without our help.
+    Q_UNUSED(device);
+    return DiskResult::Success;
+}
+
 const char* findCACertBundle()
 {
     // Cache the result - this is called on every curl handle setup

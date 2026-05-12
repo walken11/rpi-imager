@@ -1466,6 +1466,18 @@ void DownloadThread::_onDownloadSuccess()
 void DownloadThread::_onDownloadError(const QString &msg)
 {
     _cancelled = true;
+
+    // Drop the device handle before asking the OS to refresh its view of the
+    // disk — an open handle can hold off re-enumeration on Windows.
+    // _closeFiles() is idempotent, so double-close from later cleanup is fine.
+    _closeFiles();
+
+    // If we got far enough to wipe and open the target's partition table, the
+    // OS may be holding a stale view of the disk (no drive letter, no visible
+    // partitions) — give it a chance to re-enumerate before we report the
+    // failure. No-op on platforms where the kernel does this automatically.
+    PlatformQuirks::refreshDiskView(_filename);
+
     emit error(msg);
 }
 
