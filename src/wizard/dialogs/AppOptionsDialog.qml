@@ -47,7 +47,7 @@ BaseDialog {
         // Register focus groups
         registerFocusGroup("header", function(){ 
             // Only include header text when screen reader is active (otherwise it's not focusable)
-            if (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) {
+            if (popup.imageWriter && popup.imageWriter.screenReaderActive) {
                 return [headerText]
             }
             return []
@@ -84,9 +84,9 @@ BaseDialog {
         horizontalAlignment: Text.AlignHCenter
         Accessible.role: Accessible.Heading
         Accessible.name: text
-        Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+        focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
     }
 
     // Options section — scrollable so we don't hide items when the option
@@ -444,7 +444,7 @@ BaseDialog {
         Component.onCompleted: {
             registerFocusGroup("content", function(){ 
                 // Only include text elements when screen reader is active (otherwise they're not focusable)
-                if (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) {
+                if (popup.imageWriter && popup.imageWriter.screenReaderActive) {
                     return [confirmTitleText, confirmDescriptionText]
                 }
                 return []
@@ -465,9 +465,9 @@ BaseDialog {
             Layout.fillWidth: true
             Accessible.role: Accessible.Heading
             Accessible.name: text
-            Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+            focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
         }
 
         Text {
@@ -481,9 +481,9 @@ BaseDialog {
             text: qsTr("If you disable warnings, Raspberry Pi Imager will <b>not show confirmation prompts before writing images</b>. You will still be required to <b>type the exact name</b> when selecting a system drive.")
             Accessible.role: Accessible.StaticText
             Accessible.name: text.replace(/<[^>]+>/g, '')  // Strip HTML tags for accessibility
-            Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+            focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
         }
 
         RowLayout {
@@ -532,7 +532,7 @@ BaseDialog {
         Component.onCompleted: {
             registerFocusGroup("content", function(){
                 // Only include text elements when screen reader is active (otherwise they're not focusable)
-                if (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) {
+                if (popup.imageWriter && popup.imageWriter.screenReaderActive) {
                     return [clearSettingsTitleText, clearSettingsDescriptionText]
                 }
                 return []
@@ -553,9 +553,9 @@ BaseDialog {
             Layout.fillWidth: true
             Accessible.role: Accessible.Heading
             Accessible.name: text
-            Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+            focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
         }
 
         Text {
@@ -569,9 +569,9 @@ BaseDialog {
             text: qsTr("This will remove all saved OS customisation settings such as hostname, WiFi, and user credentials.")
             Accessible.role: Accessible.StaticText
             Accessible.name: text.replace(/<[^>]+>/g, '')
-            Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+            focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
         }
 
         RowLayout {

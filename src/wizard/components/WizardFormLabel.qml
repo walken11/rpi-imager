@@ -44,7 +44,7 @@ Text {
     Accessible.name: text
     Accessible.description: accessibleDescription
     Accessible.ignored: accessibleDescription.length === 0
-    Accessible.focusable: imageWriter ? imageWriter.isScreenReaderActive() : false
-    focusPolicy: (imageWriter && imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-    activeFocusOnTab: imageWriter ? imageWriter.isScreenReaderActive() : false
+    Accessible.focusable: imageWriter ? imageWriter.screenReaderActive : false
+    focusPolicy: (imageWriter && imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+    activeFocusOnTab: imageWriter ? imageWriter.screenReaderActive : false
 } 

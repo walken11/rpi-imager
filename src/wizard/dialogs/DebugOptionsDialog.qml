@@ -30,7 +30,7 @@ BaseDialog {
     // Register focus groups when component is ready
     Component.onCompleted: {
         registerFocusGroup("header", function(){ 
-            if (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) {
+            if (popup.imageWriter && popup.imageWriter.screenReaderActive) {
                 return [headerText, warningText]
             }
             return []
@@ -55,9 +55,9 @@ BaseDialog {
         horizontalAlignment: Text.AlignHCenter
         Accessible.role: Accessible.Heading
         Accessible.name: text
-        Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+        focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
     }
 
     // Warning text
@@ -72,9 +72,9 @@ BaseDialog {
         horizontalAlignment: Text.AlignHCenter
         Accessible.role: Accessible.StaticText
         Accessible.name: text
-        Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+        focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
     }
 
     // Scrollable options section

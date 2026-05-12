@@ -31,7 +31,7 @@ BaseDialog {
     Component.onCompleted: {
         registerFocusGroup("content", function(){ 
             // Only include text elements when screen reader is active (otherwise they're not focusable)
-            if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+            if (root.imageWriter && root.imageWriter.screenReaderActive) {
                 return [titleText, descriptionText, subText]
             }
             return []
@@ -52,9 +52,9 @@ BaseDialog {
         Layout.fillWidth: true
         Accessible.role: Accessible.Heading
         Accessible.name: text
-        Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+        focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
     }
 
     Text {
@@ -66,9 +66,9 @@ BaseDialog {
         Layout.fillWidth: true
         Accessible.role: Accessible.StaticText
         Accessible.name: text
-        Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+        focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
     }
 
     Text {
@@ -80,9 +80,9 @@ BaseDialog {
         Layout.fillWidth: true
         Accessible.role: Accessible.StaticText
         Accessible.name: text
-        Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+        focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
     }
 
     RowLayout {

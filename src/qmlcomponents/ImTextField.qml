@@ -23,9 +23,12 @@ TextField {
     persistentSelection: true
     cursorVisible: activeFocus
     
-    // Accessibility properties
+    // Accessibility properties.
+    // Never expose text content via Accessible.name: for password fields this would
+    // leak the secret to assistive tech, and for normal fields VoiceOver already
+    // announces the value separately via the EditableText role.
     Accessible.role: Accessible.EditableText
-    Accessible.name: placeholderText !== "" ? placeholderText : text
+    Accessible.name: placeholderText
     Accessible.description: ""
     Accessible.editable: true
     Accessible.focused: activeFocus

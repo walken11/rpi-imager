@@ -1219,7 +1219,7 @@ Item {
             // match your focus group style
             registerFocusGroup("token_conflict_content", function() {
                 // Only include text elements when screen reader is active (otherwise they're not focusable)
-                if (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.isScreenReaderActive()) {
+                if (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.screenReaderActive) {
                     return [titleText, bodyText]
                 }
                 return []
@@ -1248,9 +1248,9 @@ Item {
             Accessible.role: Accessible.Heading
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.screenReaderActive : false
         }
 
         // Body / security note
@@ -1267,9 +1267,9 @@ Item {
             Accessible.role: Accessible.StaticText
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (tokenConflictDialog.imageWriter && tokenConflictDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: tokenConflictDialog.imageWriter ? tokenConflictDialog.imageWriter.screenReaderActive : false
         }
 
         // Buttons row
@@ -1376,7 +1376,7 @@ Item {
             // match your focus group style
             registerFocusGroup("repo_url_content", function() {
                 // Only include text elements when screen reader is active (otherwise they're not focusable)
-                if (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.isScreenReaderActive()) {
+                if (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.screenReaderActive) {
                     return [repoTitleText, repoBodyText, repoUrlText]
                 }
                 return []
@@ -1407,9 +1407,9 @@ Item {
             Accessible.role: Accessible.Heading
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
         }
 
         // Body / security note
@@ -1427,9 +1427,9 @@ Item {
             Accessible.role: Accessible.StaticText
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
         }
         
         // Show the URL being requested
@@ -1456,9 +1456,9 @@ Item {
                 Accessible.role: Accessible.StaticText
                 Accessible.name: qsTr("Repository URL: %1").arg(repositoryUrlDialog.repoUrl)
                 Accessible.ignored: false
-                Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
+                focusPolicy: (repositoryUrlDialog.imageWriter && repositoryUrlDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: repositoryUrlDialog.imageWriter ? repositoryUrlDialog.imageWriter.screenReaderActive : false
             }
         }
 

@@ -105,9 +105,9 @@ FocusScope {
                 Accessible.role: Accessible.Heading
                 Accessible.name: root.title
                 Accessible.ignored: false
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
             }
             
             MarqueeText {
@@ -121,9 +121,9 @@ FocusScope {
                 Accessible.role: Accessible.StaticText
                 Accessible.name: root.subtitle
                 Accessible.ignored: false
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
             }
         }
         
@@ -219,7 +219,7 @@ FocusScope {
         registerFocusGroup("_wizard_header", function(){ 
             var items = []
             // Only include title/subtitle in focus order when screen reader is active
-            if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+            if (root.imageWriter && root.imageWriter.screenReaderActive) {
                 if (titleText.visible) items.push(titleText)
                 if (subtitleText.visible) items.push(subtitleText)
             }
@@ -230,7 +230,7 @@ FocusScope {
         
         // Set initial focus based on screen reader state
         var firstFocusTarget = null
-        if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+        if (root.imageWriter && root.imageWriter.screenReaderActive) {
             // Screen reader active: start at title for full context
             firstFocusTarget = (titleText.visible ? titleText : initialFocusItem)
         } else {
@@ -247,7 +247,7 @@ FocusScope {
         if (visible) {
             // Set initial focus based on screen reader state
             var firstFocusTarget = null
-            if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+            if (root.imageWriter && root.imageWriter.screenReaderActive) {
                 // Screen reader active: start at title for full context
                 firstFocusTarget = (titleText.visible ? titleText : initialFocusItem)
             } else {

@@ -34,7 +34,7 @@ Text {
     Accessible.role: Accessible.StaticText
     Accessible.name: text
     Accessible.ignored: false
-    Accessible.focusable: imageWriter ? imageWriter.isScreenReaderActive() : false
-    focusPolicy: (imageWriter && imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-    activeFocusOnTab: imageWriter ? imageWriter.isScreenReaderActive() : false
+    Accessible.focusable: imageWriter ? imageWriter.screenReaderActive : false
+    focusPolicy: (imageWriter && imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+    activeFocusOnTab: imageWriter ? imageWriter.screenReaderActive : false
 } 

@@ -27,7 +27,7 @@ WizardStepBase {
         root.registerFocusGroup("hostname_fields", function(){ 
             // Only include help text when screen reader is active (otherwise it's not focusable)
             var items = []
-            if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+            if (root.imageWriter && root.imageWriter.screenReaderActive) {
                 items.push(helpText)
             }
             items.push(fieldHostname)

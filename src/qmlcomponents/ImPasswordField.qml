@@ -52,13 +52,11 @@ Item {
     activeFocusOnTab: true
     focusPolicy: Qt.TabFocus
 
-    // Accessible properties
-    Accessible.role: Accessible.EditableText
-    Accessible.name: textField.placeholderText !== "" ? textField.placeholderText : textField.text
-    Accessible.description: root.accessibleDescription
-    Accessible.editable: true
-    Accessible.focused: textField.activeFocus
-    Accessible.passwordEdit: !passwordVisible
+    // Accessibility lives on the inner ImTextField only. Decorating both the
+    // wrapping Item and the inner field as EditableText creates two
+    // QAccessibleInterfaces for the same control, which has been observed to
+    // crash VoiceOver on macOS during focus transitions (issue #1607).
+    Accessible.ignored: true
 
     ImTextField {
         id: textField

@@ -121,6 +121,7 @@ ImageWriter::ImageWriter(QObject *parent)
       _engine(nullptr),
       _networkchecktimer(),
       _osListRefreshTimer(),
+      _screenReaderPollTimer(),
       _suspendInhibitor(nullptr),
       _thread(nullptr),
       _verifyEnabled(true), _multipleFilesInZip(false), _online(false), _extractSizeKnown(true),
@@ -179,6 +180,22 @@ ImageWriter::ImageWriter(QObject *parent)
         platform = "cli";
     }
     _device_info = std::make_unique<DeviceInfo>();
+
+#ifndef CLI_ONLY_BUILD
+    // QAccessible::isActive() has no change notification on macOS/Windows, so
+    // we poll. Toggling a screen reader is a deliberate user gesture, so a
+    // 500 ms cadence is plenty without being a measurable cost.
+    _screenReaderActiveCached = QAccessible::isActive();
+    _screenReaderPollTimer.setInterval(500);
+    connect(&_screenReaderPollTimer, &QTimer::timeout, this, [this]() {
+        const bool now = QAccessible::isActive();
+        if (now != _screenReaderActiveCached) {
+            _screenReaderActiveCached = now;
+            emit screenReaderActiveChanged();
+        }
+    });
+    _screenReaderPollTimer.start();
+#endif
 
     if (::isEmbeddedMode())
     {
@@ -4174,7 +4191,7 @@ bool ImageWriter::hasMouse()
 bool ImageWriter::isScreenReaderActive() const
 {
 #ifndef CLI_ONLY_BUILD
-    return QAccessible::isActive();
+    return _screenReaderActiveCached;
 #else
     return false;
 #endif

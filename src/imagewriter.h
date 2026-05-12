@@ -72,6 +72,7 @@ public:
 
     Q_PROPERTY(WriteState writeState READ writeState NOTIFY writeStateChanged)
     Q_PROPERTY(bool isOsListUnavailable READ isOsListUnavailable NOTIFY osListUnavailableChanged)
+    Q_PROPERTY(bool screenReaderActive READ isScreenReaderActive NOTIFY screenReaderActiveChanged)
 
     /* Returns true if the extract size is reliably known (false for gz files which can't store sizes >4GB) */
     Q_INVOKABLE bool isExtractSizeKnown() const { return _extractSizeKnown; }
@@ -444,6 +445,7 @@ signals:
     void permissionWarning(QVariant msg);
     void locationPermissionGranted();
     void performanceSaveDialogNeeded(const QString &suggestedFilename, const QString &initialDir);
+    void screenReaderActiveChanged();
 
 protected slots:
     void startProgressPolling();
@@ -512,6 +514,8 @@ protected:
     QQmlApplicationEngine *_engine;
     QTimer _networkchecktimer;
     QTimer _osListRefreshTimer;
+    QTimer _screenReaderPollTimer;
+    bool _screenReaderActiveCached = false;
     SuspendInhibitor *_suspendInhibitor;
     DownloadThread *_thread;
     bool _verifyEnabled, _multipleFilesInZip, _online, _extractSizeKnown;

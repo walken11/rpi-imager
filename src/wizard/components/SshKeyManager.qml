@@ -140,9 +140,9 @@ ColumnLayout {
             Accessible.role: Accessible.StaticText
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+            focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
         }
         
         ImButton {
@@ -192,9 +192,9 @@ ColumnLayout {
                     return qsTr("SSH key %1").arg(index + 1)
                 }
                 Accessible.ignored: false
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
                 
                 // Key text (truncated for display)
                 Text {

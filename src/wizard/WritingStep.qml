@@ -117,9 +117,9 @@ WizardStepBase {
                 Layout.fillWidth: true
                 Accessible.role: Accessible.Heading
                 Accessible.name: text
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
             }
 
             GridLayout {
@@ -137,9 +137,9 @@ WizardStepBase {
                     color: Style.formLabelColor
                     Accessible.role: Accessible.StaticText
                     Accessible.name: text + ": " + (wizardContainer.selectedDeviceName || CommonStrings.noDeviceSelected)
-                    Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                    focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                    activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                    Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                    focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                    activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
                 }
 
                 MarqueeText {
@@ -161,9 +161,9 @@ WizardStepBase {
                     color: Style.formLabelColor
                     Accessible.role: Accessible.StaticText
                     Accessible.name: text + " " + (wizardContainer.selectedOsName || CommonStrings.noImageSelected)
-                    Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                    focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                    activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                    Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                    focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                    activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
                 }
 
                 MarqueeText {
@@ -185,9 +185,9 @@ WizardStepBase {
                     color: Style.formLabelColor
                     Accessible.role: Accessible.StaticText
                     Accessible.name: text + ": " + (wizardContainer.selectedStorageName || CommonStrings.noStorageSelected)
-                    Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                    focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                    activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                    Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                    focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                    activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
                 }
 
                 MarqueeText {
@@ -222,9 +222,9 @@ WizardStepBase {
                 Layout.fillWidth: true
                 Accessible.role: Accessible.Heading
                 Accessible.name: text
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
             }
 
             ScrollView {
@@ -315,9 +315,9 @@ WizardStepBase {
                 horizontalAlignment: Text.AlignHCenter
                 Accessible.role: Accessible.StatusBar
                 Accessible.name: text
-                Accessible.focusable: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
-                focusPolicy: (root.imageWriter && root.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-                activeFocusOnTab: root.imageWriter ? root.imageWriter.isScreenReaderActive() : false
+                Accessible.focusable: root.imageWriter ? root.imageWriter.screenReaderActive : false
+                focusPolicy: (root.imageWriter && root.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+                activeFocusOnTab: root.imageWriter ? root.imageWriter.screenReaderActive : false
             }
 
             ProgressBar {
@@ -430,7 +430,7 @@ WizardStepBase {
         Component.onCompleted: {
             registerFocusGroup("warning", function(){ 
                 // Only include warning texts when screen reader is active (otherwise they're not focusable)
-                if (confirmDialog.imageWriter && confirmDialog.imageWriter.isScreenReaderActive()) {
+                if (confirmDialog.imageWriter && confirmDialog.imageWriter.screenReaderActive) {
                     return [warningText, permanentText]
                 }
                 return []
@@ -444,7 +444,7 @@ WizardStepBase {
         onOpened: {
             // If a screen reader is active, bypass the timer - screen reader users
             // need time to hear the content, not wait for a visual countdown
-            if (confirmDialog.imageWriter && confirmDialog.imageWriter.isScreenReaderActive()) {
+            if (confirmDialog.imageWriter && confirmDialog.imageWriter.screenReaderActive) {
                 allowAccept = true
                 countdown = 0
                 rebuildFocusOrder()
@@ -473,9 +473,9 @@ WizardStepBase {
             Accessible.role: Accessible.Heading
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: confirmDialog.imageWriter ? confirmDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (confirmDialog.imageWriter && confirmDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: confirmDialog.imageWriter ? confirmDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: confirmDialog.imageWriter ? confirmDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (confirmDialog.imageWriter && confirmDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: confirmDialog.imageWriter ? confirmDialog.imageWriter.screenReaderActive : false
         }
 
         Text {
@@ -489,9 +489,9 @@ WizardStepBase {
             Accessible.role: Accessible.StaticText
             Accessible.name: text
             Accessible.ignored: false
-            Accessible.focusable: confirmDialog.imageWriter ? confirmDialog.imageWriter.isScreenReaderActive() : false
-            focusPolicy: (confirmDialog.imageWriter && confirmDialog.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-            activeFocusOnTab: confirmDialog.imageWriter ? confirmDialog.imageWriter.isScreenReaderActive() : false
+            Accessible.focusable: confirmDialog.imageWriter ? confirmDialog.imageWriter.screenReaderActive : false
+            focusPolicy: (confirmDialog.imageWriter && confirmDialog.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+            activeFocusOnTab: confirmDialog.imageWriter ? confirmDialog.imageWriter.screenReaderActive : false
         }
 
         Text {
@@ -652,7 +652,7 @@ WizardStepBase {
             var items = []
             if (summaryLayout.visible) {
                 // Only include text labels when screen reader is active
-                if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+                if (root.imageWriter && root.imageWriter.screenReaderActive) {
                     items.push(summaryHeading)
                     items.push(deviceLabel)
                     items.push(osLabel)
@@ -667,7 +667,7 @@ WizardStepBase {
             var items = []
             if (customLayout.visible) {
                 // Only include heading when screen reader is active; always include scroll view
-                if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+                if (root.imageWriter && root.imageWriter.screenReaderActive) {
                     items.push(customizationsHeading)
                 }
                 items.push(customizationsScrollView)
@@ -680,7 +680,7 @@ WizardStepBase {
             var items = []
             if (progressLayout.visible) {
                 // Only include progress text when screen reader is active
-                if (root.imageWriter && root.imageWriter.isScreenReaderActive()) {
+                if (root.imageWriter && root.imageWriter.screenReaderActive) {
                     items.push(progressText)
                 }
                 // Always include progress bar when visible (during writing)

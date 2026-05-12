@@ -33,7 +33,7 @@ BaseDialog {
     Component.onCompleted: {
         registerFocusGroup("header", function(){
             // Only include header text when screen reader is active (otherwise it's not focusable)
-            if (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) {
+            if (popup.imageWriter && popup.imageWriter.screenReaderActive) {
                 return [headerText]
             }
             return []
@@ -72,9 +72,9 @@ BaseDialog {
         Accessible.role: Accessible.Heading
         Accessible.name: text + ", " + qsTr("Choose the source for operating system images")
         Accessible.ignored: false
-        Accessible.focusable: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
-        focusPolicy: (popup.imageWriter && popup.imageWriter.isScreenReaderActive()) ? Qt.TabFocus : Qt.NoFocus
-        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.isScreenReaderActive() : false
+        Accessible.focusable: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
+        focusPolicy: (popup.imageWriter && popup.imageWriter.screenReaderActive) ? Qt.TabFocus : Qt.NoFocus
+        activeFocusOnTab: popup.imageWriter ? popup.imageWriter.screenReaderActive : false
     }
 
     // Options section
